@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:padding="8px" android:layout_height="fill_parent" android:layout_width="fill_parent" android:isScrollContainer="true">
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/entername" android:id="@+id/enter_id_label"></TextView>
+<EditText android:layout_below="@+id/enter_id_label" android:layout_height="wrap_content" android:id="@+id/enter_id_input" android:layout_width="fill_parent" android:digits="0123456789" android:focusable="true" android:hint="@string/enteridhint" android:inputType="number" android:lines="1"></EditText>
+<Button android:layout_below="@+id/enter_id_input" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/storevalidate_gr_id" android:text="@string/storevalidatebuttontext"></Button>
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentBottom="true" android:id="@+id/enterid_feedback_label" android:text="@string/stored_id_user" android:visibility="invisible"></TextView>
+</RelativeLayout>

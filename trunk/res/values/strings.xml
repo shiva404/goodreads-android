@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bookshelves_label">bookshelves</string>
+    <string name="stored_id_user">You will be remembered as</string>
+    <string name="username_label">user:</string>
+    <string name="profile_label">profile</string>
+    <string name="updates_label">updates</string>
+    <string name="reviews_label">reviews</string>
+    <string name="friends_label">friends</string>
+    <string name="hi_nobody">Welcome to Goodreads! Enter your user ID in the preferences to continue.</string>
+    <string name="internet_access">Internet Access</string>
+    <string name="storevalidatebuttontext">Remember!</string>
+    <string name="enteridhint">Your Goodreads ID</string>
+    <string name="about">About</string>
+    <string name="entername">Enter your Goodreads ID number:</string>
+    <string name="welcome">Welcome to Goodreads for Android!</string>
+    <string name="user">User Settings</string>
+    <string name="hello">Hello World, GoodreadsActivity!</string>
+    <string name="app_name">Goodreads</string>
+<string name="hi_user">hi</string>
+<string name="usersettings">User Settings</string>
+</resources>
