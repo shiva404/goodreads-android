@@ -1,6 +1,8 @@
 package se.janlindblom.android.goodreads;
 
 /**
+ * $Id:$
+ * 
  * Copyright (c) 2009, Jan Lindblom
  * All rights reserved.
  *
@@ -63,7 +65,7 @@ import android.widget.TextView;
 /**
  * 
  * @author Jan Lindblom (lindblom.jan@gmail.com)
- * @version 0.1
+ * @version $Rev:$
  *
  */
 public class GoodreadsActivity extends Activity implements Observer {

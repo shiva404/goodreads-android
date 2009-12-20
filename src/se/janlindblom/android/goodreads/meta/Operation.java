@@ -1,6 +1,8 @@
 package se.janlindblom.android.goodreads.meta;
 
 /**
+ * $Id:$
+ * 
  * Copyright (c) 2009, Jan Lindblom
  * All rights reserved.
  *
@@ -34,6 +36,8 @@ package se.janlindblom.android.goodreads.meta;
 
 /**
  * Operation - contains and extends nothing.
+ * @author Jan Lindblom (lindblom.jan@gmail.com)
+ * @version $Rev:$
  */
 public interface Operation {
 	public static final int OPERATION_USER  = 1;

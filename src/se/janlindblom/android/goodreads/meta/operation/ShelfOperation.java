@@ -4,6 +4,8 @@
 package se.janlindblom.android.goodreads.meta.operation;
 
 /**
+ * $Id:$
+ * 
  * Copyright (c) 2009, Jan Lindblom
  * All rights reserved.
  *

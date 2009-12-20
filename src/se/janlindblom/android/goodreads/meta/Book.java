@@ -9,6 +9,8 @@ public class Book {
 	private String title;
 	private double averageRating;
 	private String link;
+	private Author author;
+	
 	/**
 	 * @param id the id to set
 	 */
@@ -104,5 +106,17 @@ public class Book {
 	 */
 	public String getLink() {
 		return link;
+	}
+	/**
+	 * @param author the author to set
+	 */
+	public void setAuthor(Author author) {
+		this.author = author;
+	}
+	/**
+	 * @return the author
+	 */
+	public Author getAuthor() {
+		return author;
 	}
 }

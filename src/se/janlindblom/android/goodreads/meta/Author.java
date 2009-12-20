@@ -1,4 +1,4 @@
-package se.janlindblom.android.goodreads;
+package se.janlindblom.android.goodreads.meta;
 
 public class Author {
 	private int id;
