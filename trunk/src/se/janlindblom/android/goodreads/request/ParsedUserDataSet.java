@@ -2,8 +2,8 @@ package se.janlindblom.android.goodreads.request;
 
 import java.util.Vector;
 
-import se.janlindblom.android.goodreads.BookShelf;
 import se.janlindblom.android.goodreads.Update;
+import se.janlindblom.android.goodreads.meta.Shelf;
 
 public class ParsedUserDataSet {
 	private boolean extractedAuthentication = false;
@@ -14,7 +14,7 @@ public class ParsedUserDataSet {
 	private String extractedUserName = null;
 	private int extractedFriendsCount = 0;
 	private int extractedReviews = 0;
-	private Vector<BookShelf> bookShelves = new Vector<BookShelf>();
+	private Vector<Shelf> bookShelves = new Vector<Shelf>();
 	private Vector<Update> updates = new Vector<Update>();
 	private String extractedLink = null;
 
@@ -84,11 +84,11 @@ public class ParsedUserDataSet {
 		return extractedFriendsCount;
 	}
 
-	public void addShelf(BookShelf currentShelf) {
+	public void addShelf(Shelf currentShelf) {
 		bookShelves.add(currentShelf);
 	}
 
-	public Vector<BookShelf> getBookShelves() {
+	public Vector<Shelf> getBookShelves() {
 		return bookShelves;
 	}
 

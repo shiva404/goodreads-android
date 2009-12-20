@@ -4,8 +4,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.ext.DefaultHandler2;
 
-import se.janlindblom.android.goodreads.BookShelf;
 import se.janlindblom.android.goodreads.Update;
+import se.janlindblom.android.goodreads.meta.Shelf;
 
 public class UserHandler extends DefaultHandler2 {
 	
@@ -46,7 +46,7 @@ public class UserHandler extends DefaultHandler2 {
     private boolean inUpdateLink = false;
     private boolean inUpdateDescription = false;
     
-    private BookShelf currentShelf = null;
+    private Shelf currentShelf = null;
     private Update currentUpdate = null;
 
     private ParsedUserDataSet puds = new ParsedUserDataSet();
@@ -98,7 +98,7 @@ public class UserHandler extends DefaultHandler2 {
         	 this.inUserShelves = true;
          } else if (this.inUser && this.inUserShelves && localName.equals("user_shelf")) {
         	 this.inUserShelf = true;
-        	 currentShelf = new BookShelf();
+        	 currentShelf = new Shelf();
          } else if (this.inUser && this.inUserShelves && this.inUserShelf && localName.equals("book_count")) {
         	 this.inBookCount = true;
          } else if (this.inUser && this.inUserShelves && this.inUserShelf && localName.equals("description")) {

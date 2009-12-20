@@ -34,7 +34,6 @@ package se.janlindblom.android.goodreads.meta;
 
 import java.util.Vector;
 
-import se.janlindblom.android.goodreads.BookShelf;
 import se.janlindblom.android.goodreads.Update;
 import se.janlindblom.android.goodreads.request.ParsedUserDataSet;
 
@@ -42,7 +41,7 @@ public class User {
 	private int id;
 	private String name;
 	private String userName;
-	private Vector<BookShelf> bookShelves;
+	private Vector<Shelf> bookShelves;
 	private String link;
 	private int friends;
 	private int reviews;
@@ -80,10 +79,10 @@ public class User {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public Vector<BookShelf> getBookShelves() {
+	public Vector<Shelf> getBookShelves() {
 		return bookShelves;
 	}
-	public void setBookShelves(Vector<BookShelf> bookShelves) {
+	public void setBookShelves(Vector<Shelf> bookShelves) {
 		this.bookShelves = bookShelves;
 	}
 	public String getLink() {

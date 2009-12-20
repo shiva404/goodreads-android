@@ -36,7 +36,8 @@ package se.janlindblom.android.goodreads.meta;
  * Operation - contains and extends nothing.
  */
 public interface Operation {
-	public static final int OPERATION_USER = 1;
+	public static final int OPERATION_USER  = 1;
+	public static final int OPERATION_SHELF = 2;
 	
 	public Response execute();
 

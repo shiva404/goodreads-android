@@ -1,7 +1,7 @@
 package se.janlindblom.android.goodreads;
 
 public class Author {
-
+	private int id;
 	private String name;
 	private int ratings_count;
 	private int text_reviews_count;
@@ -24,6 +24,18 @@ public class Author {
 	}
 	public void setText_reviews_count(int textReviewsCount) {
 		text_reviews_count = textReviewsCount;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
 	}
 	
 }
