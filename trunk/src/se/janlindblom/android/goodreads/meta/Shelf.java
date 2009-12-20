@@ -10,9 +10,21 @@ public class Shelf {
 	private String name = null;
 	private Vector<Book> books = null;
 	
+	public Shelf() {
+		books = new Vector<Book>();
+	}
+	
 	public String toString() {
 		return "Id: " + id + ", Name: " + name + ", Count: " + count +
 			", Exclusive: " + exclusive + ", Description: " + description;
+	}
+	
+	public boolean addBook(Book book) {
+		if (books.add(book)) {
+			count++;
+			return true;
+		}
+		return false;
 	}
 	
 	public void setCount(int count) {
