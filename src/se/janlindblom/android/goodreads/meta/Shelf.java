@@ -1,9 +1,8 @@
-package se.janlindblom.android.goodreads;
+package se.janlindblom.android.goodreads.meta;
 
 import java.util.Vector;
-import se.janlindblom.android.goodreads.response.Book;
 
-public class BookShelf {
+public class Shelf {
 	private int count = 0;
 	private String description = null;
 	private int id = 0;

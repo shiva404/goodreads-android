@@ -198,14 +198,21 @@ public class GoodreadsActivity extends Activity implements Observer {
 		if (observable.getClass().equals(ResponseBucket.class)) {
 			response = responses.get();
 			if ((response != null) && (response.getType() == Response.RESPONSE_USER)) {
-				handler.post(new Runnable() {
-					public void run() {
-						UserResponse ur = (UserResponse) response;
-						me = ur.getUser();
-						updateMainScreenForUser();
-						updatePreferencesScreenForUser();
-					}
-				});
+				/* Response in queue is a User response. */
+				SharedPreferences settings = getSharedPreferences(GOODREADS_PREFS, 0);
+				int userid = settings.getInt("user", 0);
+				UserResponse ur = (UserResponse) response;
+				/* Update main screen if user == me */
+				if (userid == ur.getUser().getId()) {
+					handler.post(new Runnable() {
+						public void run() {
+							UserResponse ur = (UserResponse) response;
+							me = ur.getUser();
+							updateMainScreenForUser();
+							updatePreferencesScreenForUser();
+						}
+					});
+				}
 			}
 		}
 	}
