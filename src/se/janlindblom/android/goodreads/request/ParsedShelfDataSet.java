@@ -1,7 +1,9 @@
 package se.janlindblom.android.goodreads.request;
 
+import se.janlindblom.android.goodreads.meta.Shelf;
+
 /**
- * $Id:$
+ * $Id$
  * 
  * Copyright (c) 2009, Jan Lindblom
  * All rights reserved.
@@ -36,12 +38,13 @@ package se.janlindblom.android.goodreads.request;
 
 /**
  * @author Jan Lindblom (lindblom.jan@gmail.com)
- * @version $Rev:$
+ * @version $Rev$
  */
 public class ParsedShelfDataSet {
 	private boolean extractedAuthentication = false;
 	private String extractedKey = null;
 	private String extractedMethod = null;
+	private Shelf shelf;
 
 	public void setExtractedAuthentication(String string) {
 		if (string.equals("true")) {
@@ -69,5 +72,19 @@ public class ParsedShelfDataSet {
 
 	public String getExtractedMethod() {
 		return extractedMethod;
+	}
+
+	/**
+	 * @param shelf the shelf to set
+	 */
+	public void setShelf(Shelf shelf) {
+		this.shelf = shelf;
+	}
+
+	/**
+	 * @return the shelf
+	 */
+	public Shelf getShelf() {
+		return shelf;
 	}
 }
