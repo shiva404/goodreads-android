@@ -1,7 +1,7 @@
 package se.janlindblom.android.goodreads;
 
 /**
- * $Id:$
+ * $Id$
  * 
  * Copyright (c) 2009, Jan Lindblom
  * All rights reserved.
@@ -50,6 +50,7 @@ import se.janlindblom.android.goodreads.meta.response.UserResponse;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
@@ -65,7 +66,7 @@ import android.widget.TextView;
 /**
  * 
  * @author Jan Lindblom (lindblom.jan@gmail.com)
- * @version $Rev:$
+ * @version $Rev$
  *
  */
 public class GoodreadsActivity extends Activity implements Observer {
@@ -97,6 +98,7 @@ public class GoodreadsActivity extends Activity implements Observer {
 		if (requester != null)
 			if (!requester.isRunning())
 				requester.start();
+		Uri uri = this.getIntent().getData();
 	}
 	
 	public void onPause() {
