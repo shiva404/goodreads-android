@@ -84,7 +84,7 @@ public class ShelfHandler extends DefaultHandler2 {
     
     private String currentString;
     
-    private ParsedShelfDataSet psds = new ParsedShelfDataSet();
+    private ParsedShelfDataSet psds;
     
     private Shelf shelf;
     private Book currentBook;
@@ -103,9 +103,9 @@ public class ShelfHandler extends DefaultHandler2 {
     public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
     	currentString = "";
     	if (localName.equals("GoodreadsResponse")) {
-    		this.setInGoodreadsResponse(true);
+    		this.inGoodreadsResponse = true;
     	} else if (this.inGoodreadsResponse && localName.equals("Request")) {
-    		this.setInRequest(true);
+    		this.inRequest = true;
    		} else if (this.inRequest && localName.equals("authentication")) {
    			this.inAuthentication = true;
    		} else if (this.inRequest && localName.equals("key")) {
@@ -114,11 +114,11 @@ public class ShelfHandler extends DefaultHandler2 {
    			this.inMethod = true;
    		} else if (!this.inRequest && localName.equals("books")) {
    			this.inBooks = true;
-   			this.setBooksStart(Integer.parseInt(atts.getValue("start")));
-   			this.setBooksEnd(Integer.parseInt(atts.getValue("end")));
-   			this.setBooksCurrentPage(Integer.parseInt(atts.getValue("currentpage")));
-   			this.setBooksTotal(Integer.parseInt(atts.getValue("total")));
-   			this.setBooksPages(Integer.parseInt(atts.getValue("numpages")));
+   			this.booksStart = Integer.parseInt(atts.getValue("start"));
+   			this.booksEnd = Integer.parseInt(atts.getValue("end"));
+   			this.booksCurrentPage = Integer.parseInt(atts.getValue("currentpage"));
+   			this.booksTotal = Integer.parseInt(atts.getValue("total"));
+   			this.booksPages = Integer.parseInt(atts.getValue("numpages"));
    			shelf = new Shelf();
    		} else if (this.inBooks && localName.equals("book")) {
    			this.inBook = true;
@@ -158,10 +158,10 @@ public class ShelfHandler extends DefaultHandler2 {
     }
     
     public void endElement(String namespaceURI, String localName, String qName) throws SAXException {
-    	if (localName.equals("GoodreadsResponse")) { 
-            this.setInGoodreadsResponse(false); 
+    	if (localName.equals("GoodreadsResponse")) {
+    		this.inGoodreadsResponse = false; 
        } else if (this.inGoodreadsResponse && localName.equals("Request")) {
-           this.setInRequest(false);
+    	   this.inRequest = false;
        } else if (this.inRequest && localName.equals("authentication")) {
     	   this.inAuthentication = false;
        } else if (this.inRequest && localName.equals("key")) {
@@ -256,382 +256,4 @@ public class ShelfHandler extends DefaultHandler2 {
     		currentAuthor.setName(currentString);
     	}
     }
-
-	/**
-	 * @return the inGoodreadsResponse
-	 */
-	public boolean isInGoodreadsResponse() {
-		return inGoodreadsResponse;
-	}
-
-	/**
-	 * @param inGoodreadsResponse the inGoodreadsResponse to set
-	 */
-	public void setInGoodreadsResponse(boolean inGoodreadsResponse) {
-		this.inGoodreadsResponse = inGoodreadsResponse;
-	}
-
-	/**
-	 * @return the inRequest
-	 */
-	public boolean isInRequest() {
-		return inRequest;
-	}
-
-	/**
-	 * @param inRequest the inRequest to set
-	 */
-	public void setInRequest(boolean inRequest) {
-		this.inRequest = inRequest;
-	}
-
-	/**
-	 * @return the inAuthentication
-	 */
-	public boolean isInAuthentication() {
-		return inAuthentication;
-	}
-
-	/**
-	 * @param inAuthentication the inAuthentication to set
-	 */
-	public void setInAuthentication(boolean inAuthentication) {
-		this.inAuthentication = inAuthentication;
-	}
-
-	/**
-	 * @return the inKey
-	 */
-	public boolean isInKey() {
-		return inKey;
-	}
-
-	/**
-	 * @param inKey the inKey to set
-	 */
-	public void setInKey(boolean inKey) {
-		this.inKey = inKey;
-	}
-
-	/**
-	 * @return the inKeyCDATA
-	 */
-	public boolean isInKeyCDATA() {
-		return inKeyCDATA;
-	}
-
-	/**
-	 * @param inKeyCDATA the inKeyCDATA to set
-	 */
-	public void setInKeyCDATA(boolean inKeyCDATA) {
-		this.inKeyCDATA = inKeyCDATA;
-	}
-
-	/**
-	 * @return the inMethod
-	 */
-	public boolean isInMethod() {
-		return inMethod;
-	}
-
-	/**
-	 * @param inMethod the inMethod to set
-	 */
-	public void setInMethod(boolean inMethod) {
-		this.inMethod = inMethod;
-	}
-
-	/**
-	 * @return the inMethodCDATA
-	 */
-	public boolean isInMethodCDATA() {
-		return inMethodCDATA;
-	}
-
-	/**
-	 * @param inMethodCDATA the inMethodCDATA to set
-	 */
-	public void setInMethodCDATA(boolean inMethodCDATA) {
-		this.inMethodCDATA = inMethodCDATA;
-	}
-
-	/**
-	 * @return the inBooks
-	 */
-	public boolean isInBooks() {
-		return inBooks;
-	}
-
-	/**
-	 * @param inBooks the inBooks to set
-	 */
-	public void setInBooks(boolean inBooks) {
-		this.inBooks = inBooks;
-	}
-
-	/**
-	 * @return the inBook
-	 */
-	public boolean isInBook() {
-		return inBook;
-	}
-
-	/**
-	 * @param inBook the inBook to set
-	 */
-	public void setInBook(boolean inBook) {
-		this.inBook = inBook;
-	}
-
-	/**
-	 * @return the inBookId
-	 */
-	public boolean isInBookId() {
-		return inBookId;
-	}
-
-	/**
-	 * @param inBookId the inBookId to set
-	 */
-	public void setInBookId(boolean inBookId) {
-		this.inBookId = inBookId;
-	}
-
-	/**
-	 * @return the inIsbn
-	 */
-	public boolean isInIsbn() {
-		return inIsbn;
-	}
-
-	/**
-	 * @param inIsbn the inIsbn to set
-	 */
-	public void setInIsbn(boolean inIsbn) {
-		this.inIsbn = inIsbn;
-	}
-
-	/**
-	 * @return the inIsbn13
-	 */
-	public boolean isInIsbn13() {
-		return inIsbn13;
-	}
-
-	/**
-	 * @param inIsbn13 the inIsbn13 to set
-	 */
-	public void setInIsbn13(boolean inIsbn13) {
-		this.inIsbn13 = inIsbn13;
-	}
-
-	/**
-	 * @return the inBookRatingsCount
-	 */
-	public boolean isInBookRatingsCount() {
-		return inBookRatingsCount;
-	}
-
-	/**
-	 * @param inBookRatingsCount the inBookRatingsCount to set
-	 */
-	public void setInBookRatingsCount(boolean inBookRatingsCount) {
-		this.inBookRatingsCount = inBookRatingsCount;
-	}
-
-	/**
-	 * @return the inBookTextReviewsCount
-	 */
-	public boolean isInBookTextReviewsCount() {
-		return inBookTextReviewsCount;
-	}
-
-	/**
-	 * @param inBookTextReviewsCount the inBookTextReviewsCount to set
-	 */
-	public void setInBookTextReviewsCount(boolean inBookTextReviewsCount) {
-		this.inBookTextReviewsCount = inBookTextReviewsCount;
-	}
-
-	/**
-	 * @return the inTitle
-	 */
-	public boolean isInTitle() {
-		return inTitle;
-	}
-
-	/**
-	 * @param inTitle the inTitle to set
-	 */
-	public void setInTitle(boolean inTitle) {
-		this.inTitle = inTitle;
-	}
-
-	/**
-	 * @return the inAverageRating
-	 */
-	public boolean isInAverageRating() {
-		return inAverageRating;
-	}
-
-	/**
-	 * @param inAverageRating the inAverageRating to set
-	 */
-	public void setInAverageRating(boolean inAverageRating) {
-		this.inAverageRating = inAverageRating;
-	}
-
-	/**
-	 * @return the inLink
-	 */
-	public boolean isInLink() {
-		return inLink;
-	}
-
-	/**
-	 * @param inLink the inLink to set
-	 */
-	public void setInLink(boolean inLink) {
-		this.inLink = inLink;
-	}
-
-	/**
-	 * @return the inAuthor
-	 */
-	public boolean isInAuthor() {
-		return inAuthor;
-	}
-
-	/**
-	 * @param inAuthor the inAuthor to set
-	 */
-	public void setInAuthor(boolean inAuthor) {
-		this.inAuthor = inAuthor;
-	}
-
-	/**
-	 * @return the inAuthorId
-	 */
-	public boolean isInAuthorId() {
-		return inAuthorId;
-	}
-
-	/**
-	 * @param inAuthorId the inAuthorId to set
-	 */
-	public void setInAuthorId(boolean inAuthorId) {
-		this.inAuthorId = inAuthorId;
-	}
-
-	/**
-	 * @return the inAuthorName
-	 */
-	public boolean isInAuthorName() {
-		return inAuthorName;
-	}
-
-	/**
-	 * @param inAuthorName the inAuthorName to set
-	 */
-	public void setInAuthorName(boolean inAuthorName) {
-		this.inAuthorName = inAuthorName;
-	}
-
-	/**
-	 * @return the inAuthorRatingsCount
-	 */
-	public boolean isInAuthorRatingsCount() {
-		return inAuthorRatingsCount;
-	}
-
-	/**
-	 * @param inAuthorRatingsCount the inAuthorRatingsCount to set
-	 */
-	public void setInAuthorRatingsCount(boolean inAuthorRatingsCount) {
-		this.inAuthorRatingsCount = inAuthorRatingsCount;
-	}
-
-	/**
-	 * @return the inAuthorTextReviewsCount
-	 */
-	public boolean isInAuthorTextReviewsCount() {
-		return inAuthorTextReviewsCount;
-	}
-
-	/**
-	 * @param inAuthorTextReviewsCount the inAuthorTextReviewsCount to set
-	 */
-	public void setInAuthorTextReviewsCount(boolean inAuthorTextReviewsCount) {
-		this.inAuthorTextReviewsCount = inAuthorTextReviewsCount;
-	}
-
-	/**
-	 * @param booksStart the booksStart to set
-	 */
-	public void setBooksStart(int booksStart) {
-		this.booksStart = booksStart;
-	}
-
-	/**
-	 * @return the booksStart
-	 */
-	public int getBooksStart() {
-		return booksStart;
-	}
-
-	/**
-	 * @param booksEnd the booksEnd to set
-	 */
-	public void setBooksEnd(int booksEnd) {
-		this.booksEnd = booksEnd;
-	}
-
-	/**
-	 * @return the booksEnd
-	 */
-	public int getBooksEnd() {
-		return booksEnd;
-	}
-
-	/**
-	 * @param booksPages the booksPages to set
-	 */
-	public void setBooksPages(int booksPages) {
-		this.booksPages = booksPages;
-	}
-
-	/**
-	 * @return the booksPages
-	 */
-	public int getBooksPages() {
-		return booksPages;
-	}
-
-	/**
-	 * @param booksCurrentPage the booksCurrentPage to set
-	 */
-	public void setBooksCurrentPage(int booksCurrentPage) {
-		this.booksCurrentPage = booksCurrentPage;
-	}
-
-	/**
-	 * @return the booksCurrentPage
-	 */
-	public int getBooksCurrentPage() {
-		return booksCurrentPage;
-	}
-
-	/**
-	 * @param booksTotal the booksTotal to set
-	 */
-	public void setBooksTotal(int booksTotal) {
-		this.booksTotal = booksTotal;
-	}
-
-	/**
-	 * @return the booksTotal
-	 */
-	public int getBooksTotal() {
-		return booksTotal;
-	}
 }
