@@ -1,7 +1,7 @@
 package se.janlindblom.android.goodreads.meta.operation;
 
 /**
- * $Id:$
+ * $Id$
  * 
  * Copyright (c) 2009, Jan Lindblom
  * All rights reserved.
@@ -135,7 +135,8 @@ public class UserOperation implements Operation {
 			xr = sp.getXMLReader();
 			uh = new UserHandler();
 			xr.setContentHandler(uh);
-			xr.parse(new InputSource(getShowURL().openStream()));
+			InputSource is = new InputSource(showURL.openStream());
+			xr.parse(is);
 			ParsedUserDataSet puds = uh.getParsedData();
 			UserResponse retval = new UserResponse(puds);
 			return retval;

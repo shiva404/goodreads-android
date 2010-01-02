@@ -1,4 +1,4 @@
-package se.janlindblom.android.goodreads;
+package se.janlindblom.android.goodreads.meta;
 
 /**
  * $Id$
@@ -34,28 +34,18 @@ package se.janlindblom.android.goodreads;
  *
  */
 
-import se.janlindblom.android.goodreads.meta.Actor;
+import se.janlindblom.android.goodreads.Update;
 
 /**
  * 
  * @author Jan Lindblom (lindblom.jan@gmail.com)
  * @version $Rev:$
+ *
  */
-public interface Update {
-	public static final int UPDATE_REVIEW = 1;
-	public static final int UPDATE_COMMENT = 2;
-	public static final int UPDATE_USERLISTVOTE = 3;
-	
-	public int getType();
-	public String getActionText();
-	public String getLink();
-	public String getImageUrl();
-	public Actor getActor();
-	public String getUpdatedAt();
-	
-	public void setActionText(String actionText);
-	public void setLink(String link);
-	public void setImageUrl(String imageUrl);
-	public void setActor(Actor actor);
-	public void setUpdatedAt(String updatedAt);
+public class ReviewUpdate extends BaseUpdate implements Update {
+
+	@Override
+	public int getType() {
+		return Update.UPDATE_REVIEW;
+	}
 }

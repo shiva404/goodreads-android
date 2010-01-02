@@ -1,7 +1,7 @@
 package se.janlindblom.android.goodreads.request;
 
 /**
- * $Id:$
+ * $Id$
  * 
  * Copyright (c) 2009, Jan Lindblom
  * All rights reserved.
@@ -39,12 +39,13 @@ import org.xml.sax.SAXException;
 import org.xml.sax.ext.DefaultHandler2;
 
 import se.janlindblom.android.goodreads.Update;
+import se.janlindblom.android.goodreads.meta.ReviewUpdate;
 import se.janlindblom.android.goodreads.meta.Shelf;
 
 /**
  * 
  * @author Jan Lindblom (lindblom.jan@gmail.com)
- * @version $Rev:$
+ * @version $Rev$
  *
  */
 public class UserHandler extends DefaultHandler2 {
@@ -55,17 +56,16 @@ public class UserHandler extends DefaultHandler2 {
     /* Request fields */
     private boolean inAuthentication = false;
     private boolean inKey = false;
-    private boolean inKeyCDATA = false;
     private boolean inMethod = false;
-    private boolean inMethodCDATA = false;
     
     private boolean inUser = false;
     /* User fields */
     private boolean inName = false;
-	private boolean inNameCDATA = false;
     private boolean inUserName = false;
-    private boolean inUserNameCDATA = false;
+    private boolean inUserId = false;
     private boolean inLink = false;
+    private boolean inUserImageUrl = false;
+    private boolean inUserImageSmallUrl = false;
     private boolean inUpdatesRssUrl = false;
     private boolean inReviewsRssUrl = false;
     private boolean inFriendsCount = false;
@@ -85,13 +85,21 @@ public class UserHandler extends DefaultHandler2 {
     private boolean inTitle = false;
     private boolean inUpdateLink = false;
     private boolean inUpdateDescription = false;
+    private boolean inUpdateActionText = false;
+    private boolean inUpdateImageUrl = false;
+    private boolean inUpdateUpdatedAt = false;
+    private boolean inUpdateActor = false;
+    private boolean inUpdateCommentBody = false;
+    /* Update Actor fields */
+    private boolean inUpdateActorId = false;
+    private boolean inUpdateActorName = false;
+    private boolean inUpdateActorImageUrl = false;
+    private boolean inUpdateActorLink = false;
     
     private Shelf currentShelf = null;
     private Update currentUpdate = null;
 
-    private ParsedUserDataSet puds = new ParsedUserDataSet();
-
-	private boolean inTitleCDATA = false;
+    private ParsedUserDataSet puds;
 	
 	private String currentString;
     
@@ -101,19 +109,23 @@ public class UserHandler extends DefaultHandler2 {
     
     @Override 
     public void startDocument() throws SAXException {
+    	System.err.println("UserHandler::startDocument()");
     	this.puds = new ParsedUserDataSet();
     }
     
     @Override 
-    public void endDocument() throws SAXException {}
+    public void endDocument() throws SAXException {
+    	System.err.println("UserHandler::endDocument()");
+    }
     
     @Override
     public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
+    	System.err.println("UserHandler::startElement("+localName+")");
     	currentString = "";
     	if (localName.equals("GoodreadsResponse")) {
-    		this.setInGoodreadsResponse(true);
+    		this.inGoodreadsResponse = true;
     	} else if (this.inGoodreadsResponse && localName.equals("Request")) {
-    		this.setInRequest(true);
+    		this.inRequest = true;
    		} else if (this.inRequest && localName.equals("authentication")) {
    			this.inAuthentication = true;
    		} else if (this.inRequest && localName.equals("key")) {
@@ -121,9 +133,9 @@ public class UserHandler extends DefaultHandler2 {
    		} else if (this.inRequest && localName.equals("method")) {
    			this.inMethod = true;
    		} else if (localName.equals("user")) {
-   			int userid = Integer.parseInt(atts.getValue("id"));
-   			puds.setExtractedUserId(userid);
-   			this.setInUser(true);
+   			this.inUser = true;
+   		} else if (this.inUser && localName.equals("id") && !this.inUserShelves) {
+   			this.inUserId = true;
    		} else if (this.inUser && localName.equals("name") && !this.inUserShelves) {
         	 this.inName = true;
          } else if (this.inUser && localName.equals("user-name")) {
@@ -153,7 +165,9 @@ public class UserHandler extends DefaultHandler2 {
         	 this.inUpdates = true;
          } else if (this.inUser && this.inUpdates && localName.equals("update")) {
         	 this.inUpdate = true;
-        	 currentUpdate = new Update();
+        	 if (atts.getValue("type").equals("review")) {
+        		 currentUpdate = new ReviewUpdate();
+        	 }
          } else if (this.inUser && this.inUpdates && this.inUpdate && localName.equals("title")) {
         	 this.inTitle = true;
          } else if (this.inUser && this.inUpdates && this.inUpdate && localName.equals("link")) {
@@ -163,42 +177,13 @@ public class UserHandler extends DefaultHandler2 {
          } 
     }
     
-    @Override
-    public void startCDATA() {
-    	if (this.inKey) {
-    		this.inKeyCDATA = true;
-    	} else if (this.inMethod) {
-    		this.inMethodCDATA = true;
-    	} else if (this.inName) {
-    		this.inNameCDATA = true;
-    	} else if (this.inUserName) {
-    		this.inUserNameCDATA = true;
-    	} else if (this.inTitle) {
-    		this.inTitleCDATA = true;
-    	}
-    }
-    
-    @Override
-    public void endCDATA() {
-    	if (this.inKey) {
-    		this.inKeyCDATA = false;
-    	} else if (this.inMethod) {
-    		this.inMethodCDATA = false;
-    	} else if (this.inName) {
-    		this.inNameCDATA = false;
-    	} else if (this.inUserName) {
-    		this.inUserNameCDATA = false;
-    	} else if (this.inTitle) {
-    		this.inTitleCDATA = false;
-    	}
-    }
-    
     @Override 
     public void endElement(String namespaceURI, String localName, String qName) throws SAXException {
+    	System.err.println("UserHandler::endElement("+localName+")");
     	if (localName.equals("GoodreadsResponse")) { 
-            this.setInGoodreadsResponse(false); 
+            this.inGoodreadsResponse = false;
        } else if (this.inGoodreadsResponse && localName.equals("Request")) {
-           this.setInRequest(false);
+    	   this.inRequest = false;
        } else if (this.inRequest && localName.equals("authentication")) {
     	   this.inAuthentication = false;
        } else if (this.inRequest && localName.equals("key")) {
@@ -206,7 +191,9 @@ public class UserHandler extends DefaultHandler2 {
        } else if (this.inRequest && localName.equals("method")) {
     	   this.inMethod = false;
        } else if (localName.equals("user")) {
-    	   this.setInUser(false);
+    	   this.inUser = false;
+       } else if (this.inUser && localName.equals("id") && !this.inUserShelves) {
+  			this.inUserId = false;
        } else if (this.inUser && localName.equals("name") && !this.inUserShelves) {
     	   this.inName = false;
        } else if (this.inUser && localName.equals("user-name")) {
@@ -235,7 +222,7 @@ public class UserHandler extends DefaultHandler2 {
        } else if (this.inUser && localName.equals("updates")) {
       	 this.inUpdates = false;
        } else if (this.inUser && this.inUpdates && localName.equals("update")) {
-    	   if (!currentUpdate.getTitle().equals("New Update::UpdateArray update"))
+    	   if (puds != null)
     		   puds.addUpdate(currentUpdate);
     	   this.inUpdate = false;
        } else if (this.inUser && this.inUpdates && this.inUpdate && localName.equals("title")) {
@@ -265,6 +252,11 @@ public class UserHandler extends DefaultHandler2 {
     		currentString = currentString.concat(new String(ch, start, length));
     		currentString = currentString.trim();
     		puds.setExtractedName(currentString);
+    	} else if (this.inUserId) {
+    		currentString = currentString.concat(new String(ch, start, length));
+    		currentString = currentString.trim();
+    		int userid = Integer.parseInt(currentString);
+   			puds.setExtractedUserId(userid);
     	} else if (this.inUserName) {
     		currentString = currentString.concat(new String(ch, start, length));
     		currentString = currentString.trim();
@@ -308,7 +300,6 @@ public class UserHandler extends DefaultHandler2 {
     		String newString = new String(ch, start, length);
     		newString = newString.trim();
     		currentString = currentString.concat(newString + " ");
-//    		currentString = currentString.trim();
     		currentUpdate.setDescription(currentString);
     	} else if (this.inTitle) {
     		currentString = currentString.concat(new String(ch, start, length));
@@ -320,28 +311,4 @@ public class UserHandler extends DefaultHandler2 {
     		currentUpdate.setLink(currentString);
     	}
     }
-
-	public void setInGoodreadsResponse(boolean inGoodreadsResponse) {
-		this.inGoodreadsResponse = inGoodreadsResponse;
-	}
-
-	public boolean isInGoodreadsResponse() {
-		return inGoodreadsResponse;
-	}
-
-	public void setInRequest(boolean inRequest) {
-		this.inRequest = inRequest;
-	}
-
-	public boolean isInRequest() {
-		return inRequest;
-	}
-
-	public void setInUser(boolean inUser) {
-		this.inUser = inUser;
-	}
-
-	public boolean isInUser() {
-		return inUser;
-	}
 }
